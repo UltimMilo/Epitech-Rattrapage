@@ -17,7 +17,7 @@ services:
   api:
     container_name: api
     build: ./api
-    volumes: 
+    volumes:
       - ./api:/usr/src/app
       - /usr/src/app/node_modules
     ports:
@@ -26,40 +26,3 @@ services:
     environment:
       - PORT=8080
       - HOST=0.0.0.0
-    # networks:
-    #   - db-tier
-    # depends_on:
-    #   - "mongo"
-
-#   mongo-express:
-#     image: mongo-express
-#     container_name: mongo-express
-#     restart: always
-#     ports:
-#       - 8081:8081
-#     environment:
-#       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
-#       ME_CONFIG_MONGODB_ADMINPASSWORD: admin
-#     networks:
-#       - db-tier
-#     depends_on:
-#       - "mongo"
-
-#   mongo:
-#     image: mongo
-#     container_name: mongo
-#     ports:
-#       - 27017:27017
-#     environment:
-#       MONDO_INITDB_DATABASE: dashboard
-#       MONGO_INITDB_ROOT_USERNAME: admin
-#       MONGO_INITDB_ROOT_PASSWORD: admin
-#     networks:
-#       - db-tier
-
-# volumes:
-#   db-data:
-
-# networks:
-#   db-tier:
-#     driver: bridge
