@@ -1,47 +1,26 @@
 import { Route, HashRouter, Redirect} from 'react-router-dom';
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 
-import Navbar from './components/navigation/navbar';
-import Login from './components/auth/login/login';
-import Register from './components/auth/register/register';
-import Dashboard from './components/pages/dashboard';
-import withAuth from './withAuth';
-import withoutAuth from './withoutAuth';
-import { useState } from 'react';
+import Header from 'components/Header/Header';
 
-const Theme = createMuiTheme({
-  palette: {
-    primary:{
-      main: '#80ED99'
-    },
-  }
-});
+import Login from 'scenes/Auth/Login/Login';
+import Register from 'scenes/Auth/Register/Register';
+import Dashboard from 'scenes/Dashboard/Dashboard';
+
+import withAuth from 'services/auth/withAuth';
+import withoutAuth from 'services/auth/withoutAuth';
+
+import theme from 'theme';
+
 
 function App() {
-  const [isAuth, setIsAuth] = useState(checkToken);
-
-  function checkToken() {
-    fetch('/checkToken')
-      .then(res => {
-        if (res.status === 200) {
-          setIsAuth(true);
-        } else {
-          const error = new Error(res.error);
-          throw error;
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        setIsAuth(false);
-      });
-  }
 
   return (
     <HashRouter>
-      <MuiThemeProvider theme={Theme}>
+      <MuiThemeProvider theme={theme}>
         <div className="App">
           <div className='header'>
-            <Navbar />
+            <Header />
           </div>
           <div className='content'>
             <Redirect exact from="/" to="/dashboard" />
