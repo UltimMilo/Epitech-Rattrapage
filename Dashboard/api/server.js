@@ -1,11 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser')
+const fetch = require("node-fetch");
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const path = require('path');
 const ip = require('ip');
 const withAuth = require('./middleware');
+
+const dotenv = require('dotenv');
+dotenv.config();
+
 const app = express();
 
 const User = require('./models/User');
@@ -17,12 +22,16 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'build')));
 
-const mongo_uri = 'mongodb+srv://ilyes:ilyes@test.s4mqh.mongodb.net/test?retryWrites=true&w=majority';
-mongoose.connect(mongo_uri, function(err) {
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
+
+mongoose.connect(process.env.MONGO_URI, function(err) {
   if (err) {
     throw err;
   } else {
-    console.log(`Successfully connected to ${mongo_uri}`);
+    console.log(`Successfully connected to ${process.env.MONGO_URI}`);
   }
 });
 
@@ -77,6 +86,24 @@ app.post('/api/authenticate', function(req, res) {
         });
       }
     });
+});
+
+app.post('/api/github', function(req, res) {
+  const { code } = req.body;
+
+  fetch(`https://github.com/login/oauth/access_token?client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_CLIENT_SECRET}&code=${code}`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+    },
+  })
+  .then(response => response.json())
+  .then(response => {
+    return res.status(200).json(response);
+  }).catch(error => {
+    console.log(error);
+    return res.status(400).json(error);
+  });
 });
 
 app.use('/about.json', function(req, res) {

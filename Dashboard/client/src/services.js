@@ -1,6 +1,13 @@
-import Converter from 'components/services/Converter/Converter';
+import MoneyConverter from 'widgets/Converter/MoneyConverter/MoneyConverter';
 
-import WeatherService from 'components/services/weather/Weather';
+import WeatherService from 'widgets/Weather/Weather';
+
+import NewsByCountry from 'widgets/News/NewsByCountry/NewsByCountry';
+import NewsByDate from 'widgets/News/NewsByDate/NewsByDate';
+import NewsByTopic from 'widgets/News/NewsByTopic/NewsByTopic';
+
+import CreateRepo from 'widgets/Github/CreateRepo/CreateRepo';
+import Account from 'widgets/Github/Account/Account';
 
 const services = [
   {
@@ -8,9 +15,9 @@ const services = [
     name: 'Converter',
     widgets: [
       {
-        id: 'converter',
+        id: 'money',
         name: 'Money converter',
-        component: Converter,
+        component: MoneyConverter,
       },
     ]
   },
@@ -20,7 +27,7 @@ const services = [
     widgets: [
       {
         id: 'day',
-        name: 'Weather',
+        name: "Today's weather",
         component: WeatherService,
       }
     ]
@@ -30,19 +37,35 @@ const services = [
     name: 'News',
     widgets: [
       {
-        id: 'country-news',
-        name: 'Top news of selected country',
-        component: 'Component',
+        id: 'news-by-country',
+        name: 'Top news by country',
+        component: NewsByCountry,
       },
       {
         id: 'news-by-date',
-        name: 'News by dates',
-        component: 'Component',
+        name: 'Top news by dates',
+        component: NewsByDate,
       },
       {
         id: 'news-by-topic',
-        name: 'Top news of selected topic',
-        component: 'Component',
+        name: 'Top news by topic',
+        component: NewsByTopic,
+      }
+    ]
+  },
+  {
+    id: 'github',
+    name: 'Github',
+    widgets: [
+      {
+        id: 'create-repo',
+        name: 'Create new repository',
+        component: CreateRepo,
+      },
+      {
+        id: 'account',
+        name: 'Account informations',
+        component: Account,
       }
     ]
   }
