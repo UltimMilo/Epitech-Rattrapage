@@ -109,64 +109,116 @@ app.post('/api/github', function(req, res) {
 app.use('/about.json', function(req, res) {
   const time = (new Date).getTime()
   res.json({
-    "client": {
-      "host": ip.address()
+    client: {
+      host: ip.address()
     },
-    "server": {
-      "current_time": time,
-      "services": [{
-        "name": "Weather",
-        "widgets": [{
-          "name": "Daily Weather",
-          "description": "Display current weather in a chosen city",
-          "params": [{
-            "name": "city",
-            "type": "String"
-            },
-            {
-              "name": "country",
-              "type": "String"
-          }]
-        }]},
+    server: {
+      current_time: time,
+      services: [
         {
-          "name": "News",
-          "widgets": [{
-            "name": "Country News",
-            "description": "Display the top news in a chosen country",
-            "params": [{
-              "name": "country",
-              "type": "String"
-            }]},
+          name: "Weather",
+          widgets: [
             {
-              "name": "Specific Topic",
-              "description": "Display the world top news about the given topic",
-              "params": [{
-                "name": "Topic",
-                "type": "String"
-              }]
-            },
-            {
-              "name": "News by date",
-              "description": "Display top news during specific time",
-              "params": [{
-                "name": "Topic",
-                "type": "String",
-                "name": "date",
-                "type": "Number"
-              }]
+              name: "Daily Weather",
+              description: "Display current weather in a chosen city",
+              params: [
+                {
+                  name: "city",
+                  type: "String"
+                },
+                {
+                  name: "country",
+                  type: "String"
+                }
+              ]
             }
           ]
         },
         {
-          "name": "Converter",
-          "widgets": [{
-            "name": "Currency converter",
-            "description": "Convert your currency in the one you want and display it",
-            "params":[{
-              "name": "currency",
-              "type": "float"
-            }]
-          }]
+          name: "News",
+          widgets: [
+            {
+              name: "News by country",
+              description: "Display the top news in a chosen country",
+              params: [
+                {
+                  name: "country",
+                  type: "String"
+                }
+              ]
+            },
+            {
+              name: "News by topic",
+              description: "Display the world top news about the given topic",
+              params: [
+                {
+                  name: "topic",
+                  type: "String"
+                },
+                {
+                  name: "language",
+                  type: "String"
+                }
+              ]
+            },
+            {
+              name: "News by date",
+              description: "Display top news during specific time",
+              params: [
+                {
+                  name: "topic",
+                  type: "String"
+                },
+                {
+                  name: "date",
+                  type: "Date"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          name: "Converter",
+          widgets: [
+            {
+              name: "Currency converter",
+              description: "Convert your currency in the one you want and display it",
+              params:[
+                {
+                  name: "currency",
+                  type: "Number"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          name: "Github",
+          widgets: [
+            {
+              name: "Account informations",
+              description: "Display basic informations about github account",
+              params: []
+            },
+            {
+              name: "Create new repository",
+              description: "Create a new repository from given parameters",
+              params: [
+                {
+                  name: "repository",
+                  type: "String"
+                },
+                {
+                  name: "description",
+                  type: "String"
+                },
+                {
+                  name: "private",
+                  type: "Bool"
+                }
+              ]
+            }
+          ]
         }
       ]
     }
